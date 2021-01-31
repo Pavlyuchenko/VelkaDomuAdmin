@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from "svelte";
 	import clickOutside from "svelte-outside-click";
 	import { Link, navigate } from "svelte-routing";
+	import { prezdivka } from "../../store";
 
 	export let id;
 
@@ -575,7 +576,7 @@
 				podnadpis: podnadpis,
 				urlObrazku: urlObrazku,
 				blocks: blocks,
-				autor: autorClanku.id,
+				autor: $prezdivka,
 				anketa: anketa,
 				bodyAnkety: bodyAnkety,
 				nazevAnkety: nazevAnkety,
@@ -614,7 +615,7 @@
 					podnadpis: podnadpis,
 					urlObrazku: urlObrazku,
 					blocks: blocks,
-					autor: autorClanku.id,
+					autor: prezdivka,
 					anketa: anketa,
 					bodyAnkety: bodyAnkety,
 					nazevAnkety: nazevAnkety,
@@ -714,7 +715,8 @@
 						id="hlavni-stitek"
 						onfocus="this.size=8;"
 						onblur="this.size=1;"
-						onchange="this.size=1; this.blur();">
+						onchange="this.size=1; this.blur();"
+					>
 						{#each stitky as stitek}
 							<option value={stitek} style={"color: #333;"}>
 								{stitek.nazev}
@@ -756,7 +758,8 @@
 			</h1>
 
 			<div class="clanek-info">
-				<select name="autor" id="autor" bind:value={autorClanku}>
+				<span id="autor-span">{$prezdivka}</span>
+				<!-- <select name="autor" id="autor" bind:value={autorClanku}>
 					{#each autors as autor}
 						{#if autorClanku.id == autor.id}
 							<option value={autor} selected>
@@ -766,7 +769,7 @@
 							<option value={autor}>{autor.jmeno}</option>
 						{/if}
 					{/each}
-				</select>
+				</select> -->
 				<span class="clanek-datum">{getDate()}</span>
 			</div>
 			<hr id="top-hr" />
@@ -891,7 +894,7 @@
 						}}
 						on:focus|once={() => {
 							if (block.url == "Zadej ID videa...") {
-								block.tweet = "";
+								block.url = "";
 							}
 						}}
 						on:keydown={(e) => keyDown(e, block.id)}
@@ -900,7 +903,7 @@
 					>
 						{block.url}
 					</div>
-					{#if block.url != "Zadej ID videa..."}
+					{#if block.url != "Zadej ID videa..." && block.url != ""}
 						<iframe
 							title="video"
 							src={"https://www.youtube-nocookie.com/embed/" +
@@ -1017,49 +1020,67 @@
 									on:click={() => {
 										turnInto("p", block.id);
 									}}
-								>Text</div>
+								>
+									Text
+								</div>
 								<div
 									on:click={() => {
 										turnInto("h1", block.id);
 									}}
-								>Nadpis 1</div>
+								>
+									Nadpis 1
+								</div>
 								<div
 									on:click={() => {
 										turnInto("h2", block.id);
 									}}
-								>Nadpis 2</div>
+								>
+									Nadpis 2
+								</div>
 								<div
 									on:click={() => {
 										turnInto("h3", block.id);
 									}}
-								>Nadpis 3</div>
+								>
+									Nadpis 3
+								</div>
 								<div
 									on:click={() => {
 										turnInto("odrazka", block.id);
 									}}
-								>Odrážka</div>
+								>
+									Odrážka
+								</div>
 								<div
 									on:click={() => {
 										turnInto("citace", block.id);
 									}}
-								>Citace</div>
+								>
+									Citace
+								</div>
 								<div
 									on:click={() => {
 										turnInto("callout", block.id);
 									}}
-								>Callout</div>
+								>
+									Callout
+								</div>
 								{#if block.content == ""}
 									<div
 										on:click={() => {
 											turnInto("obrazek", block.id);
 										}}
-									>Obrázek</div>
+									>
+										Obrázek
+									</div>
 								{/if}
 								<div
 									on:click={() => {
 										deleteBlock(block.id);
 									}}
-								>Smazat</div>
+								>
+									Smazat
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1206,6 +1227,11 @@
 </div>
 
 <style>
+	#autor-span {
+		color: #ffa800;
+		font-size: 16px;
+		font-weight: 700;
+	}
 	iframe {
 		margin-left: 50%;
 		transform: translateX(-50%);

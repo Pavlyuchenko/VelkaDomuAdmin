@@ -14,20 +14,23 @@
 	import NovaRychlovka from "./components/NovaRychlovka.svelte";
 	import CreateContent from "./components/CreateContent.svelte";
 	import Rychlovky from "./components/Rychlovky.svelte";
+	import { isAuthenticated } from "./store";
 </script>
 
 <Router>
 	<NewNavigation />
-	<Route path="/" component={Main} />
-	<Route path="/drafts/:id" component={TextEditor} />
-	<Route path="/drafts" component={Drafts} />
-	<Route path="/drafts-kontrola/:id" component={TextEditorPublikovat} />
-	<Route path="/kontrola" component={Kontrola} />
-	<Route path="/titulni-clanek" component={TitulniVyber} />
-	<Route path="/sekundarni-clanky" component={SekundarniVyber} />
-	<Route path="/novy_zapas" component={NovyZapas} />
-	<Route path="/fb-image" component={FbImage} />
-	<Route path="/nova_rychlovka" component={NovaRychlovka} />
-	<Route path="/create_content" component={CreateContent} />
-	<Route path="/rychlovky" component={Rychlovky} />
+	{#if $isAuthenticated}
+		<Route path="/" component={Main} />
+		<Route path="/drafts/:id" component={TextEditor} />
+		<Route path="/drafts" component={Drafts} />
+		<Route path="/drafts-kontrola/:id" component={TextEditorPublikovat} />
+		<Route path="/kontrola" component={Kontrola} />
+		<Route path="/titulni-clanek" component={TitulniVyber} />
+		<Route path="/sekundarni-clanky" component={SekundarniVyber} />
+		<Route path="/novy_zapas" component={NovyZapas} />
+		<Route path="/fb-image" component={FbImage} />
+		<Route path="/nova_rychlovka" component={NovaRychlovka} />
+		<Route path="/create_content" component={CreateContent} />
+		<Route path="/rychlovky" component={Rychlovky} />
+	{/if}
 </Router>

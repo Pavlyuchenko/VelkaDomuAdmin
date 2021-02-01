@@ -19,6 +19,7 @@
 
 <Router>
 	<NewNavigation />
+	<Route path="/fb-image" component={FbImage} />
 	{#if $isAuthenticated}
 		<Route path="/" component={Main} />
 		<Route path="/drafts/:id" component={TextEditor} />
@@ -28,7 +29,6 @@
 		<Route path="/titulni-clanek" component={TitulniVyber} />
 		<Route path="/sekundarni-clanky" component={SekundarniVyber} />
 		<Route path="/novy_zapas" component={NovyZapas} />
-		<Route path="/fb-image" component={FbImage} />
 		<Route path="/nova_rychlovka" component={NovaRychlovka} />
 		<Route path="/create_content" component={CreateContent} />
 		<Route path="/rychlovky" component={Rychlovky} />

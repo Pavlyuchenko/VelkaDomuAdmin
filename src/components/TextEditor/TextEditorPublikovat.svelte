@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from "svelte";
 	import clickOutside from "svelte-outside-click";
 	import { Link, navigate } from "svelte-routing";
+	import { prezdivka } from "../../store";
 
 	import Navigation from "../NewNavigation.svelte";
 
@@ -91,7 +92,6 @@
 			urlObrazku = json.draft.urlObrazek;
 			mainPopis = json.draft.mainPopis;
 			blocks = JSON.parse(json.draft.blocks);
-			autorClanku = JSON.parse(json.draft.autor);
 
 			if (json.draft.anketa) {
 				nazevAnkety = json.draft.nazevAnkety;
@@ -563,7 +563,7 @@
 				podnadpis: podnadpis,
 				urlObrazku: urlObrazku,
 				blocks: blocks,
-				autor: autorClanku.id,
+				autor: $prezdivka,
 				anketa: anketa,
 				bodyAnkety: bodyAnkety,
 				nazevAnkety: nazevAnkety,
@@ -601,7 +601,7 @@
 					podnadpis: podnadpis,
 					urlObrazku: urlObrazku,
 					blocks: blocks,
-					autor: autorClanku.id,
+					autor: $prezdivka,
 					anketa: anketa,
 					bodyAnkety: bodyAnkety,
 					nazevAnkety: nazevAnkety,
@@ -648,7 +648,7 @@
 				podnadpis: podnadpis,
 				urlObrazku: urlObrazku,
 				blocks: blocks,
-				autor: autorClanku.id,
+				autor: $prezdivka,
 				stitek: selectedMainStitek.id,
 				dalsiStitky: dalsiStitky,
 				anketa: anketa,
@@ -774,7 +774,8 @@
 			</h1>
 
 			<div class="clanek-info">
-				<select name="autor" id="autor" bind:value={autorClanku}>
+				<span id="autor-span">{$prezdivka}</span>
+				<!-- <select name="autor" id="autor" bind:value={autorClanku}>
 					{#each autors as autor}
 						{#if autorClanku.id == autor.id}
 							<option value={autor} selected>
@@ -784,7 +785,7 @@
 							<option value={autor}>{autor.jmeno}</option>
 						{/if}
 					{/each}
-				</select>
+				</select> -->
 				<span class="clanek-datum">{getDate()}</span>
 			</div>
 			<hr id="top-hr" />
@@ -1244,6 +1245,11 @@
 </div>
 
 <style>
+	#autor-span {
+		color: #ffa800;
+		font-size: 16px;
+		font-weight: 700;
+	}
 	iframe {
 		margin-left: 50%;
 		transform: translateX(-50%);

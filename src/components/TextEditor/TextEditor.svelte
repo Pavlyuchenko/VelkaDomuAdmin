@@ -100,7 +100,6 @@
 			urlObrazku = json.draft.urlObrazek;
 			mainPopis = json.draft.mainPopis;
 			blocks = JSON.parse(json.draft.blocks);
-			autorClanku = JSON.parse(json.draft.autor);
 
 			if (json.draft.anketa) {
 				nazevAnkety = json.draft.nazevAnkety;
@@ -615,7 +614,7 @@
 					podnadpis: podnadpis,
 					urlObrazku: urlObrazku,
 					blocks: blocks,
-					autor: prezdivka,
+					autor: $prezdivka,
 					anketa: anketa,
 					bodyAnkety: bodyAnkety,
 					nazevAnkety: nazevAnkety,
@@ -708,9 +707,9 @@
 					<select
 						bind:value={selectedMainStitek}
 						style={"border: 2px solid " +
-							selectedMainStitek.color +
+							selectedMainStitek?.color +
 							"; color: " +
-							selectedMainStitek.color}
+							selectedMainStitek?.color}
 						name="hlavniStitek"
 						id="hlavni-stitek"
 						onfocus="this.size=8;"

@@ -13,12 +13,18 @@
 		);
 		const json = await res.json();
 		clanky = json.clanky;
+		/* for (let i = 0; i <= clanky.length; i++) {
+			chosen = chosen + 1;
+		} */
 		ids = json.ids;
+		chosen = ids.length;
+		console.log(clanky);
+		console.log(ids);
 	}
 
 	let clanky = [""];
 	let ids = [0];
-	let chosen = 3;
+	let chosen;
 
 	function setHlavniClanek() {
 		fetch("https://fotbalpropal.pythonanywhere.com/set-sekundarni-clanek", {
@@ -39,6 +45,7 @@
 	}
 </script>
 
+{chosen}
 <div id="main">
 	<div id="wrapper">
 		<Nadpis text="Sekundární články" />

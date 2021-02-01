@@ -12,18 +12,18 @@
 		const res = await fetch("http://127.0.0.1:8000/rychlovky");
 		let data = await res.json();
 		rychlovky = data.rychlovky;
+		console.log(data);
 
-		let objToArr = [];
+		/* let objToArr = [];
 		for (let i = 0; i < rychlovky.length; i++) {
 			objToArr.push(rychlovky[i].id);
-		}
+		} */
+		console.log(rychlovky);
 	}
 
-	async function deleteDraft(id) {
-		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/delete_draft/" + id
-		);
-		getDrafts();
+	async function deleteRychlovka(id) {
+		const res = await fetch("http://127.0.0.1:8000/delete_rychlovka/" + id);
+		getRychlovky();
 	}
 </script>
 
@@ -49,11 +49,11 @@
 								</Link>
 							</span>
 						</td>
-						<td>{JSON.parse(rychlovka.autor).jmeno}</td>
+						<td>{rychlovka.autor}</td>
 						<td>{rychlovka.datum}</td>
 						<td>{rychlovka.body}</td>
 						<td>
-							<div on:click={deleteDraft(rychlovka.id)}>
+							<div on:click={deleteRychlovka(rychlovka.id)}>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									xmlns:xlink="http://www.w3.org/1999/xlink"

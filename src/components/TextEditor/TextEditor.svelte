@@ -309,6 +309,17 @@
 			setTimeout(() => {
 				let el = document.getElementById("block" + id);
 				el.focus();
+
+				document
+					.getElementById("block" + id)
+					.addEventListener("paste", function (event) {
+						event.preventDefault();
+						document.execCommand(
+							"inserttext",
+							false,
+							event.clipboardData.getData("text/plain")
+						);
+					});
 			}, 1);
 		}
 		// Twitter
@@ -334,6 +345,17 @@
 			setTimeout(() => {
 				let el = document.getElementById("block" + id);
 				el.focus();
+
+				document
+					.getElementById("block" + id)
+					.addEventListener("paste", function (event) {
+						event.preventDefault();
+						document.execCommand(
+							"inserttext",
+							false,
+							event.clipboardData.getData("text/plain")
+						);
+					});
 			}, 1);
 
 			console.log("block" + id);
@@ -362,9 +384,20 @@
 			setTimeout(() => {
 				let el = document.getElementById("block" + id);
 				el.focus();
+
+				document
+					.getElementById("block" + id)
+					.addEventListener("paste", function (event) {
+						event.preventDefault();
+						document.execCommand(
+							"inserttext",
+							false,
+							event.clipboardData.getData("text/plain")
+						);
+					});
 			}, 1);
 		}
-		setTimeout(() => {
+		/* setTimeout(() => {
 			let el = document.getElementById("block" + id);
 			el.focus();
 			document
@@ -377,7 +410,7 @@
 						event.clipboardData.getData("text/plain")
 					);
 				});
-		}, 1);
+		}, 1); */
 	}
 
 	function keyDown(e, id) {
@@ -694,10 +727,11 @@
 				<p>* nebo /o - Odrážka</p>
 				<p>| nebo /c - Citace</p>
 				<p>&gt; nebo /z - Zvýraznění</p>
-				<p>&text& - Kurzíva</p>
-				<p>@text@ - Tučný text</p>
+				<p>Kurzíva - Ctrl + i (nebo &text/&)</p>
+				<p>Tučně - Ctrl + b (nebo @text/@)</p>
+				<p>Podtržení - Ctrl + u</p>
 				<p>/img - Obrázek</p>
-				<p>/tweet - Twitter (bez <b>&lt;script&gt;</b>)</p>
+				<p>/tweet - Tweet (bez <b>&lt;script&gt;</b>)</p>
 				<p>/ytb - Video (youtu.be/<b><u>aKKQdn26QJc</u></b>)</p>
 			</div>
 		</aside>

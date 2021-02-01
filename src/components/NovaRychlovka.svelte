@@ -1,5 +1,6 @@
 <script>
 	import { navigate } from "svelte-routing";
+	import { prezdivka } from "../store";
 
 	import Nadpis from "./Nadpis.svelte";
 
@@ -15,6 +16,7 @@
 			body: JSON.stringify({
 				titulek: nadpis,
 				body: text,
+				prezdivka: $prezdivka,
 			}),
 		})
 			.then((response) => {

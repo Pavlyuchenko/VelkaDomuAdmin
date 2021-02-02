@@ -3,6 +3,7 @@
 	import { onMount } from "svelte";
 
 	import Navigation from "../NewNavigation.svelte";
+	import { cookie, prezdivka } from "../../store";
 
 	onMount(() => {
 		getDrafts();
@@ -13,7 +14,17 @@
 
 	async function getDrafts() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/drafts_kontrola"
+			"https://fotbalpropal.pythonanywhere.com/drafts_kontrola",
+			{
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					cookie: $cookie,
+					prezdivka: $prezdivka,
+				}),
+			}
 		);
 		drafts = await res.json();
 
@@ -32,7 +43,17 @@
 
 	async function deleteDraft(id) {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/delete_draft/" + id
+			"https://fotbalpropal.pythonanywhere.com/delete_draft/" + id,
+			{
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					cookie: $cookie,
+					prezdivka: $prezdivka,
+				}),
+			}
 		);
 		getDrafts();
 	}

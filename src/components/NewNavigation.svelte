@@ -24,6 +24,9 @@
 	let fiveDigit = "";
 
 	export function changeLogin() {
+		if ($isAuthenticated) {
+			logout();
+		}
 		if (window.innerWidth > 680) {
 			showLogin = true;
 		} else {
@@ -89,7 +92,6 @@
 		);
 
 		if (res.status == 200) {
-			console.log(res.status);
 			const json = await res.json();
 
 			localStorage.user_cookie = json.user_cookie;

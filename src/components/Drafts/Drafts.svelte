@@ -1,6 +1,7 @@
 <script>
 	import { Link } from "svelte-routing";
 	import { onMount } from "svelte";
+	import { cookie, prezdivka } from "../../store";
 
 	onMount(() => {
 		getDrafts();
@@ -11,7 +12,17 @@
 
 	async function getDrafts() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/drafts"
+			"https://fotbalpropal.pythonanywhere.com/drafts",
+			{
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					cookie: $cookie,
+					prezdivka: $prezdivka,
+				}),
+			}
 		);
 		let data = await res.json();
 		drafts = data.drafts;
@@ -27,7 +38,17 @@
 
 	async function deleteDraft(id) {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/delete_draft/" + id
+			"https://fotbalpropal.pythonanywhere.com/delete_draft/" + id,
+			{
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					cookie: $cookie,
+					prezdivka: $prezdivka,
+				}),
+			}
 		);
 		getDrafts();
 	}
@@ -54,7 +75,7 @@
 								</Link>
 							</span>
 						</td>
-						<td>{JSON.parse(draft.autor).jmeno}</td>
+						<td>{draft.autor}</td>
 						<td>{draft.time_saved}</td>
 						<td>
 							<div on:click={deleteDraft(draft.id)}>

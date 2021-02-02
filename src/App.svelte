@@ -11,14 +11,17 @@
 	import NovyZapas from "./components/NovyZapas.svelte";
 	import FbImage from "./components/FbImage.svelte";
 	import Main from "./components/Main.svelte";
-	import NovaRychlovka from "./components/NovaRychlovka.svelte";
+	import NovaRychlovka from "./components/Rychlovky/NovaRychlovka.svelte";
 	import CreateContent from "./components/CreateContent.svelte";
-	import Rychlovky from "./components/Rychlovky.svelte";
+	import Rychlovky from "./components/Rychlovky/Rychlovky.svelte";
 	import { isAuthenticated } from "./store";
+	import UpravitRychlovku from "./components/Rychlovky/UpravitRychlovku.svelte";
+
+	let login = false;
 </script>
 
 <Router>
-	<NewNavigation />
+	<NewNavigation bind:this={login} />
 	<Route path="/fb-image" component={FbImage} />
 	{#if $isAuthenticated}
 		<Route path="/" component={Main} />
@@ -30,7 +33,10 @@
 		<Route path="/sekundarni-clanky" component={SekundarniVyber} />
 		<Route path="/novy_zapas" component={NovyZapas} />
 		<Route path="/nova_rychlovka" component={NovaRychlovka} />
+		<Route path="/rychlovka/:id" component={UpravitRychlovku} />
 		<Route path="/create_content" component={CreateContent} />
-		<Route path="/rychlovky" component={Rychlovky} />
+		<Route path="/rychlovky">
+			<Rychlovky {login} />
+		</Route>
 	{/if}
 </Router>

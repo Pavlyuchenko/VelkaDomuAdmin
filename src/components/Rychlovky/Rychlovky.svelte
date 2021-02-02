@@ -1,28 +1,52 @@
 <script>
 	import { Link } from "svelte-routing";
 	import { onMount } from "svelte";
+	import { cookie, isAuthenticated, prezdivka } from "../../store";
 
 	onMount(() => {
 		getRychlovky();
 	});
 
+	export let login;
+
 	let rychlovky;
 
 	async function getRychlovky() {
-		const res = await fetch("http://127.0.0.1:8000/rychlovky");
-		let data = await res.json();
-		rychlovky = data.rychlovky;
-		console.log(data);
-
-		/* let objToArr = [];
-		for (let i = 0; i < rychlovky.length; i++) {
-			objToArr.push(rychlovky[i].id);
-		} */
-		console.log(rychlovky);
+		try {
+			const res = await fetch(
+				"https://fotbalpropal.pythonanywhere.com/rychlovky",
+				{
+					method: "POST",
+					headers: {
+						"content-type": "application/json",
+					},
+					body: JSON.stringify({
+						cookie: $cookie,
+						prezdivka: $prezdivka,
+					}),
+				}
+			);
+			let data = await res.json();
+			rychlovky = data.rychlovky;
+		} catch {
+			login.changeLogin();
+		}
 	}
 
 	async function deleteRychlovka(id) {
-		const res = await fetch("http://127.0.0.1:8000/delete_rychlovka/" + id);
+		const res = await fetch(
+			"https://fotbalpropal.pythonanywhere.com/delete_rychlovka/" + id,
+			{
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					cookie: $cookie,
+					prezdivka: $prezdivka,
+				}),
+			}
+		);
 		getRychlovky();
 	}
 </script>
@@ -34,7 +58,7 @@
 			<tr>
 				<th>Titulek</th>
 				<th>Autor</th>
-				<th>Uloženo</th>
+				<th>Vytvořeno</th>
 				<th>Body</th>
 				<th>Smazat</th>
 			</tr>
@@ -51,7 +75,7 @@
 						</td>
 						<td>{rychlovka.autor}</td>
 						<td>{rychlovka.datum}</td>
-						<td>{rychlovka.body}</td>
+						<td>{rychlovka.body.substring(0, 60)}</td>
 						<td>
 							<div on:click={deleteRychlovka(rychlovka.id)}>
 								<svg

@@ -1,14 +1,14 @@
 <script>
 	import { navigate } from "svelte-routing";
-	import { prezdivka } from "../store";
+	import { cookie, prezdivka } from "../../store";
 
-	import Nadpis from "./Nadpis.svelte";
+	import Nadpis from "../Nadpis.svelte";
 
 	let nadpis = "";
 	let text = "";
 
 	function addRychlovka() {
-		fetch("http://127.0.0.1:8000/nova_rychlovka", {
+		fetch("https://fotbalpropal.pythonanywhere.com/nova_rychlovka", {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",
@@ -17,6 +17,7 @@
 				titulek: nadpis,
 				body: text,
 				prezdivka: $prezdivka,
+				cookie: $cookie,
 			}),
 		})
 			.then((response) => {

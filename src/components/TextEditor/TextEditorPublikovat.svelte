@@ -2,7 +2,7 @@
 	import { onDestroy, onMount } from "svelte";
 	import clickOutside from "svelte-outside-click";
 	import { Link, navigate } from "svelte-routing";
-	import { prezdivka } from "../../store";
+	import { cookie, prezdivka } from "../../store";
 
 	import Navigation from "../NewNavigation.svelte";
 
@@ -83,7 +83,17 @@
 
 	async function getDraft() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/draft/" + id
+			"https://fotbalpropal.pythonanywhere.com/draft/" + id,
+			{
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					cookie: $cookie,
+					prezdivka: $prezdivka,
+				}),
+			}
 		);
 		const json = await res.json();
 		if (json.titulek != "None") {
@@ -590,6 +600,8 @@
 				bodyAnkety: bodyAnkety,
 				nazevAnkety: nazevAnkety,
 				mainPopis: mainPopis,
+				prezdivka: $prezdivka,
+				cookie: $cookie,
 			}),
 		})
 			.then((response) => {
@@ -629,6 +641,8 @@
 					bodyAnkety: bodyAnkety,
 					nazevAnkety: nazevAnkety,
 					mainPopis: mainPopis,
+					prezdivka: $prezdivka,
+					cookie: $cookie,
 				}),
 			}
 		)
@@ -679,6 +693,8 @@
 				bodyAnkety: bodyAnkety,
 				nazevAnkety: nazevAnkety,
 				mainPopis: mainPopis,
+				prezdivka: $prezdivka,
+				cookie: $cookie,
 			}),
 		})
 			.then((response) => {

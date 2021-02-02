@@ -2,6 +2,7 @@
 	import Nadpis from "../Nadpis.svelte";
 	import { onMount } from "svelte";
 	import { navigate } from "svelte-routing";
+	import { cookie, prezdivka } from "../../store";
 
 	onMount(() => {
 		getClanky();
@@ -9,7 +10,17 @@
 
 	async function getClanky() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/titulni-clanek"
+			"https://fotbalpropal.pythonanywhere.com/titulni-clanek",
+			{
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					cookie: $cookie,
+					prezdivka: $prezdivka,
+				}),
+			}
 		);
 		const json = await res.json();
 		clanky = json.clanky;
@@ -27,6 +38,8 @@
 			},
 			body: JSON.stringify({
 				id: id,
+				cookie: $cookie,
+				prezdivka: $prezdivka,
 			}),
 		})
 			.then(() => {

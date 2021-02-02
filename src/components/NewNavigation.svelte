@@ -224,12 +224,6 @@
 		<span id="header__logo-text">VelkáDomůAdmin.cz</span>
 	</Link>
 	<nav id="header__navigation">
-		<div id="domu">
-			<Link to="/drafts"><span>Drafty</span></Link>
-		</div>
-		<div>
-			<Link to="/clanky"><span>Vydané články</span></Link>
-		</div>
 		<div>
 			<Link to="/statistiky"><span>Statistiky</span></Link>
 		</div>
@@ -238,6 +232,12 @@
 		</div>
 		<div>
 			<Link to="/rychlovky"><span>Rychlovky</span></Link>
+		</div>
+		<div id="domu">
+			<Link to="/drafts"><span>Drafty</span></Link>
+		</div>
+		<div>
+			<Link to="/clanky"><span>Vydané články</span></Link>
 		</div>
 		{#if !$isAuthenticated}
 			<div

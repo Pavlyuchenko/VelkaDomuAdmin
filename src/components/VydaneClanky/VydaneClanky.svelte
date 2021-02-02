@@ -1,41 +1,18 @@
 <script>
 	import { Link } from "svelte-routing";
 	import { onMount } from "svelte";
-	import { cookie, isAuthenticated, prezdivka } from "../../store";
+	import { cookie, prezdivka } from "../../store";
 
 	onMount(() => {
-		getRychlovky();
+		getDrafts();
 	});
 
-	export let login;
+	let drafts;
+	let next_id = 0;
 
-	let rychlovky;
-
-	async function getRychlovky() {
-		try {
-			const res = await fetch(
-				"https://fotbalpropal.pythonanywhere.com/rychlovky",
-				{
-					method: "POST",
-					headers: {
-						"content-type": "application/json",
-					},
-					body: JSON.stringify({
-						cookie: $cookie,
-						prezdivka: $prezdivka,
-					}),
-				}
-			);
-			let data = await res.json();
-			rychlovky = data.rychlovky;
-		} catch {
-			login.changeLogin();
-		}
-	}
-
-	async function deleteRychlovka(id) {
+	async function getDrafts() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/delete_rychlovka/" + id,
+			"https://fotbalpropal.pythonanywhere.com/vydane_clanky",
 			{
 				method: "POST",
 				headers: {
@@ -47,37 +24,54 @@
 				}),
 			}
 		);
-		getRychlovky();
+		let data = await res.json();
+		drafts = data.drafts;
+		console.log(drafts);
+	}
+
+	async function deleteDraft(id) {
+		const res = await fetch(
+			"https://fotbalpropal.pythonanywhere.com/delete_draft/" + id,
+			{
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					cookie: $cookie,
+					prezdivka: $prezdivka,
+				}),
+			}
+		);
+		getDrafts();
 	}
 </script>
 
 <div id="wrapper">
 	<section>
-		<h2>Rychlovky</h2>
+		<h2>Vydané články</h2>
 		<table>
 			<tr>
 				<th>Titulek</th>
 				<th>Autor</th>
-				<th>Vytvořeno</th>
-				<th>Body</th>
-				<th>Smazat</th>
+				<th>Uloženo</th>
+				<!-- <th>Smazat</th> -->
 			</tr>
 
-			{#if rychlovky}
-				{#each rychlovky as rychlovka}
+			{#if drafts}
+				{#each drafts as draft}
 					<tr>
 						<td>
 							<span>
-								<Link to={"/rychlovka/" + rychlovka.id}>
-									<span>{rychlovka.titulek}</span>
+								<Link to={"/clanek-edit/" + draft.id}>
+									<span>{draft.titulek}</span>
 								</Link>
 							</span>
 						</td>
-						<td>{rychlovka.autor}</td>
-						<td>{rychlovka.datum}</td>
-						<td>{rychlovka.body.substring(0, 60)}</td>
-						<td>
-							<div on:click={deleteRychlovka(rychlovka.id)}>
+						<td>{draft.autor}</td>
+						<td>{draft.time_saved}</td>
+						<!-- <td>
+							<div on:click={deleteDraft(draft.id)}>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -118,12 +112,11 @@
 									<g />
 								</svg>
 							</div>
-						</td>
+						</td> -->
 					</tr>
 				{/each}
 			{/if}
 		</table>
-		<Link to={"/nova_rychlovka"}><button>Nová rychlovka</button></Link>
 	</section>
 </div>
 
@@ -222,14 +215,14 @@
 		color: #ff8a00;
 	}
 
-	th:last-child {
+	/* th:last-child {
 		text-align: right;
 		padding-right: 20px;
 	}
 	td:last-child {
 		text-align: right;
 		padding-right: 35px;
-	}
+	} */
 
 	svg {
 		width: 20px;

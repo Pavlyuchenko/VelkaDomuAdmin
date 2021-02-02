@@ -1,5 +1,5 @@
 <script>
-	import Nadpis from "./Nadpis.svelte";
+	import Nadpis from "../Nadpis.svelte";
 	import { onMount } from "svelte";
 	import { navigate } from "svelte-routing";
 

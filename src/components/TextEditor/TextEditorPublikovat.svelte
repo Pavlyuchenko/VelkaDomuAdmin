@@ -4,9 +4,8 @@
 	import { Link, navigate } from "svelte-routing";
 	import { cookie, prezdivka } from "../../store";
 
-	import Navigation from "../NewNavigation.svelte";
-
 	export let id;
+	export let redirect = "/kontrola";
 
 	$: first = true;
 	$: titulek = "Zadej titulek";
@@ -654,7 +653,7 @@
 						document.getElementById("success").style.display =
 							"none";
 					}, 6000);
-					navigate("/kontrola");
+					navigate(redirect);
 				} else {
 					sendResponse = "Tvůj draft nebyl uložen, zkus to znovu.";
 					document.getElementById("error").style.display = "flex";
@@ -699,7 +698,7 @@
 		})
 			.then((response) => {
 				if (response.status == 200) {
-					navigate("/kontrola");
+					navigate(redirect);
 				} else {
 					sendResponse = "Tvůj draft nebyl uložen, zkus to znovu.";
 					document.getElementById("error").style.display = "flex";
@@ -745,7 +744,15 @@
 <div id="wrapper">
 	<div id="flex-container">
 		<aside>
-			<Link to="/kontrola"><span id="drafty-link">← Kontrola</span></Link>
+			{#if redirect == "/clanky"}
+				<Link to="/clanky"
+					><span id="drafty-link">← Vydané články</span></Link
+				>
+			{:else}
+				<Link to="/kontrola"
+					><span id="drafty-link">← Kontrola</span></Link
+				>
+			{/if}
 			<div id="tutorial">
 				<p># nebo /h1 - Hlavní podnadpis</p>
 				<p>## nebo /h2 - Sekundární podnadpis</p>
@@ -1241,12 +1248,14 @@
 
 			<div id="flex-publikovat">
 				<div />
-				<button
-					id="vratit"
-					on:click={() => {
-						vratitZpet();
-					}}>Vrátit zpět</button
-				>
+				{#if redirect != "/clanky"}
+					<button
+						id="vratit"
+						on:click={() => {
+							vratitZpet();
+						}}>Vrátit zpět</button
+					>
+				{/if}
 				<button
 					on:click={() => {
 						sendData();

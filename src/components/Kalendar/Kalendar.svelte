@@ -1,41 +1,17 @@
 <script>
 	import { Link } from "svelte-routing";
 	import { onMount } from "svelte";
-	import { cookie, isAuthenticated, prezdivka } from "../../store";
+	import { cookie, prezdivka } from "../../store";
 
 	onMount(() => {
-		getRychlovky();
+		getZapasy();
 	});
 
-	export let login;
+	let zapasy;
 
-	let rychlovky;
-
-	async function getRychlovky() {
-		try {
-			const res = await fetch(
-				"https://fotbalpropal.pythonanywhere.com/rychlovky",
-				{
-					method: "POST",
-					headers: {
-						"content-type": "application/json",
-					},
-					body: JSON.stringify({
-						cookie: $cookie,
-						prezdivka: $prezdivka,
-					}),
-				}
-			);
-			let data = await res.json();
-			rychlovky = data.rychlovky;
-		} catch {
-			login.changeLogin();
-		}
-	}
-
-	async function deleteRychlovka(id) {
+	async function getZapasy() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/delete_rychlovka/" + id,
+			"https://fotbalpropal.pythonanywhere.com/kalendar",
 			{
 				method: "POST",
 				headers: {
@@ -47,37 +23,50 @@
 				}),
 			}
 		);
-		getRychlovky();
+		let data = await res.json();
+		zapasy = data.zapasy;
+		console.log(zapasy);
+	}
+
+	async function deleteZapas(id) {
+		const res = await fetch(
+			"https://fotbalpropal.pythonanywhere.com/delete_zapas/" + id,
+			{
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					cookie: $cookie,
+					prezdivka: $prezdivka,
+				}),
+			}
+		);
+		getZapasy();
 	}
 </script>
 
 <div id="wrapper">
 	<section>
-		<h2>Rychlovky</h2>
+		<h2>Vydané články</h2>
 		<table>
 			<tr>
-				<th>Titulek</th>
-				<th>Autor</th>
-				<th>Vytvořeno</th>
-				<th>Body</th>
+				<th>Domácí</th>
+				<th>Hosté</th>
+				<th>Čas</th>
+				<th>Liga</th>
 				<th>Smazat</th>
 			</tr>
 
-			{#if rychlovky}
-				{#each rychlovky as rychlovka}
+			{#if zapasy}
+				{#each zapasy as zapas}
 					<tr>
+						<td>{zapas.domaci.nazev}</td>
+						<td>{zapas.hoste.nazev}</td>
+						<td>{zapas.cas}</td>
+						<td>{zapas.liga.nazev}</td>
 						<td>
-							<span>
-								<Link to={"/rychlovka/" + rychlovka.id}>
-									<span>{rychlovka.titulek}</span>
-								</Link>
-							</span>
-						</td>
-						<td>{rychlovka.autor}</td>
-						<td>{rychlovka.datum}</td>
-						<td>{rychlovka.body.substring(0, 60)}</td>
-						<td>
-							<div on:click={deleteRychlovka(rychlovka.id)}>
+							<div on:click={deleteZapas(zapas.id)}>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -123,11 +112,35 @@
 				{/each}
 			{/if}
 		</table>
-		<Link to={"/nova_rychlovka"}><button>Nová rychlovka</button></Link>
+		<Link to={"/novy_zapas"}><button>Nový zápas</button></Link>
 	</section>
 </div>
 
 <style>
+	button {
+		position: absolute;
+		right: 0;
+		bottom: -60px;
+
+		background-color: #ff8a00;
+		border: none;
+		color: white;
+		padding: 10px 21px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 18px;
+		font-weight: 600;
+
+		cursor: pointer;
+		transition: 0.1s;
+	}
+
+	button:hover {
+		background-color: #ffffff;
+		color: #ff8a00;
+	}
+
 	#wrapper {
 		padding-left: 40px;
 		padding-right: 40px;
@@ -185,41 +198,6 @@
 	}
 	td {
 		padding-left: 10px;
-	}
-
-	button {
-		position: absolute;
-		right: 0;
-		bottom: -60px;
-
-		background-color: #ff8a00;
-		border: none;
-		color: white;
-		padding: 10px 21px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 18px;
-		font-weight: 600;
-
-		cursor: pointer;
-		transition: 0.1s;
-	}
-
-	button:hover {
-		background-color: #ffffff;
-		color: #ff8a00;
-	}
-
-	td:first-child span {
-		margin: 0;
-		display: block;
-		width: 100%;
-		transition: 0.1s;
-	}
-
-	td:first-child span:hover {
-		color: #ff8a00;
 	}
 
 	th:last-child {

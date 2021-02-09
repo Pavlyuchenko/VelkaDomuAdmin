@@ -539,7 +539,12 @@
 			"left: 50%; transform: translateX(-50%);bottom: 60px; animation: .3s appear;"}
 	>
 		<div>
-			<Link to="/kalendar">
+			<Link
+				to="/kalendar"
+				on:click={() => {
+					showNav = false;
+				}}
+			>
 				<span id="nav-text-1">Kalendář</span>
 			</Link>{#if !$isAuthenticated}
 				<span
@@ -552,8 +557,18 @@
 			{:else}
 				<span id="nav-text-2" on:click={logout}>Odhlásit&nbsp;se</span>
 			{/if}
-			<Link to="/kontakt"><span id="nav-text-3">Kontakt</span></Link>
-			<Link to="/o-nas"><span id="nav-text-4">O nás</span></Link>
+			<Link
+				to="/clanky"
+				on:click={() => {
+					showNav = false;
+				}}><span id="nav-text-3">Vydané</span></Link
+			>
+			<Link
+				to="/rychlovky"
+				on:click={() => {
+					showNav = false;
+				}}><span id="nav-text-4">Rychlovky</span></Link
+			>
 			{#if !$isAuthenticated}
 				<span
 					id="nav-text-5"
@@ -1230,7 +1245,7 @@
 	#nav-text-4 {
 		position: absolute;
 		bottom: -30px;
-		left: -60px;
+		left: -100px;
 		color: #ffffff;
 	}
 	#nav-text-5 {

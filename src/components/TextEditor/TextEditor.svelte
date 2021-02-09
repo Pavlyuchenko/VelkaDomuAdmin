@@ -55,16 +55,6 @@
 		}
 
 		document
-			.getElementById("block1")
-			.addEventListener("paste", function (event) {
-				event.preventDefault();
-				document.execCommand(
-					"inserttext",
-					false,
-					event.clipboardData.getData("text/plain")
-				);
-			});
-		document
 			.getElementById("main-image")
 			.addEventListener("paste", function (event) {
 				event.preventDefault();

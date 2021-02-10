@@ -79,7 +79,7 @@
 			false
 		);
 	});
-
+	let differentSite = false;
 	async function getDraft() {
 		const res = await fetch(
 			"https://fotbalpropal.pythonanywhere.com/draft/" + id,
@@ -115,6 +115,7 @@
 			first = false;
 			firstPodnadpis = false;
 			wordCount();
+			differentSite = json.logo;
 		}
 	}
 
@@ -1186,10 +1187,14 @@
 				<input type="checkbox" bind:checked={osnova} />
 				<span class="checkmark" />
             </label> -->
-			<p id="textarea-p">
-				Napiš krátký chytlavý popis článku, kdyby se stal hlavním
-				článkem:
-			</p>
+			{#if differentSite == false}
+				<p id="textarea-p">
+					Napiš krátký chytlavý popis článku, kdyby se stal hlavním
+					článkem:
+				</p>
+			{:else}
+				<p id="textarea-p">Zadej URL původního článku:</p>
+			{/if}
 			<textarea bind:value={mainPopis} />
 			{#if anketa}
 				<div>

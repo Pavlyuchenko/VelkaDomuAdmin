@@ -20,7 +20,7 @@
 	$: anketa = false;
 	$: mainPopis = "";
 
-	let autors = [{ id: 0, jmeno: "" }];
+	let autor = "Načítání";
 	let stitky = [{ id: 1, color: "", nazev: "" }];
 
 	let focusedEl = 0;
@@ -108,7 +108,8 @@
 				anketa = json.draft.anketa;
 			}
 
-			autors = json.autors;
+			autor = json.draft.autor;
+			console.log(json);
 			stitky = json.stitky;
 			selectedMainStitek = stitky[0];
 
@@ -116,12 +117,17 @@
 			firstPodnadpis = false;
 			wordCount();
 
-			differentSite = json.logo;
+			if (json.logo != "VelkaDomu") {
+				differentSite = json.logo;
+			}
 		} else {
-			autors = json.autors;
+			autor = $prezdivka;
 			stitky = json.stitky;
 			selectedMainStitek = stitky[0];
-			differentSite = json.logo;
+
+			if (json.logo != "VelkaDomu") {
+				differentSite = json.logo;
+			}
 		}
 	}
 
@@ -722,6 +728,31 @@
 			}, 1);
 		}
 	}
+
+	let charCount = 0;
+	let CHARBEFORESAVE = 25;
+	function autoSave() {
+		fetch("https://fotbalpropal.pythonanywhere.com/save_draft", {
+			method: "POST",
+			headers: {
+				"content-type": "application/json",
+			},
+			body: JSON.stringify({
+				id: id,
+				titulek: titulek,
+				podnadpis: podnadpis,
+				urlObrazku: urlObrazku,
+				blocks: blocks,
+				autor: $prezdivka,
+				anketa: anketa,
+				bodyAnkety: bodyAnkety,
+				nazevAnkety: nazevAnkety,
+				mainPopis: mainPopis,
+				prezdivka: $prezdivka,
+				cookie: $cookie,
+			}),
+		});
+	}
 </script>
 
 <div id="wrapper">
@@ -799,7 +830,7 @@
 			</h1>
 
 			<div class="clanek-info">
-				<span id="autor-span">{$prezdivka}</span>
+				<span id="autor-span">{autor}</span>
 				<!-- <select name="autor" id="autor" bind:value={autorClanku}>
 					{#each autors as autor}
 						{#if autorClanku.id == autor.id}
@@ -1006,6 +1037,12 @@
 									e.ctrlKey
 								) {
 									// e.preventDefault();
+								}
+								if (charCount < CHARBEFORESAVE) {
+									charCount++;
+								} else {
+									autoSave();
+									charCount = 0;
 								}
 							}}
 							on:keyup={(e) => {

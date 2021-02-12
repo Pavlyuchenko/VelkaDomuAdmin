@@ -26,10 +26,9 @@
 		);
 		let data = await res.json();
 		drafts = data.drafts;
-		console.log(drafts);
 	}
 
-	async function deleteDraft(id) {
+	/* async function deleteDraft(id) {
 		const res = await fetch(
 			"https://fotbalpropal.pythonanywhere.com/delete_draft/" + id,
 			{
@@ -44,7 +43,7 @@
 			}
 		);
 		getDrafts();
-	}
+	} */
 </script>
 
 <div id="wrapper">
@@ -56,7 +55,8 @@
 					<th>Titulek</th>
 					<th>Autor</th>
 					<th>Uloženo</th>
-					<!-- <th>Smazat</th> -->
+					<th>Shlédnuto</th>
+					<th>Přesměrování</th>
 				</tr>
 
 				{#if drafts}
@@ -71,6 +71,8 @@
 							</td>
 							<td>{draft.autor}</td>
 							<td>{draft.time_saved}</td>
+							<td>{draft.viewers}</td>
+							<td>{draft.redirect}</td>
 						</tr>
 					{/each}
 				{/if}
@@ -174,15 +176,17 @@
 		color: #ff8a00;
 	}
 
-	/* th:last-child {
+	th:last-child {
 		text-align: right;
 		padding-right: 20px;
 	}
 	td:last-child {
 		text-align: right;
-		padding-right: 35px;
-	} */
-
+		padding-right: 65px;
+	}
+	td:nth-last-child(2) {
+		padding-left: 45px;
+	}
 	svg {
 		width: 20px;
 		height: 20px;

@@ -30,7 +30,7 @@
 	$: pocetSlov = 0;
 	$: pocetZnaku = 0;
 
-	$: selectedMainStitek = "";
+	$: selectedMainStitek = { nazev: "" };
 	$: dalsiStitky = "";
 
 	let sendResponse = "";
@@ -109,9 +109,8 @@
 			}
 
 			autor = json.draft.autor;
-			console.log(json);
 			stitky = json.stitky;
-			selectedMainStitek = stitky[0];
+			selectedMainStitek = json.draft.selectedStitek;
 
 			first = false;
 			firstPodnadpis = false;
@@ -123,7 +122,7 @@
 		} else {
 			autor = $prezdivka;
 			stitky = json.stitky;
-			selectedMainStitek = stitky[0];
+			selectedMainStitek = json.draft.selectedStitek;
 
 			if (json.logo != "VelkaDomu") {
 				differentSite = json.logo;
@@ -625,6 +624,7 @@
 				mainPopis: mainPopis,
 				prezdivka: $prezdivka,
 				cookie: $cookie,
+				selectedStitek: selectedMainStitek.id,
 			}),
 		})
 			.then((response) => {
@@ -666,6 +666,7 @@
 					mainPopis: mainPopis,
 					prezdivka: $prezdivka,
 					cookie: $cookie,
+					selectedStitek: selectedMainStitek.id,
 				}),
 			}
 		)
@@ -750,6 +751,7 @@
 				mainPopis: mainPopis,
 				prezdivka: $prezdivka,
 				cookie: $cookie,
+				selectedStitek: selectedMainStitek.id,
 			}),
 		});
 	}
@@ -790,17 +792,17 @@
 						onchange="this.size=1; this.blur();"
 					>
 						{#each stitky as stitek}
-							<option value={stitek} style={"color: #333;"}>
+							<option
+								value={stitek}
+								style={"color: #333;"}
+								selected={true &&
+									selectedMainStitek.nazev == stitek.nazev}
+							>
 								{stitek.nazev}
 							</option>
 						{/each}
 					</select>
 				</div>
-				<input
-					type="text"
-					placeholder="Sekundární štítky"
-					bind:value={dalsiStitky}
-				/>
 			</div>
 			<h1
 				contenteditable="true"

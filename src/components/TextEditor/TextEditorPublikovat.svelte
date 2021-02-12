@@ -110,7 +110,7 @@
 
 			autor = json.draft.autor;
 			stitky = json.stitky;
-			selectedMainStitek = stitky[0];
+			selectedMainStitek = json.draft.selectedStitek;
 
 			first = false;
 			firstPodnadpis = false;
@@ -604,6 +604,7 @@
 				mainPopis: mainPopis,
 				prezdivka: $prezdivka,
 				cookie: $cookie,
+				selectedStitek: selectedMainStitek.id,
 			}),
 		})
 			.then((response) => {
@@ -645,6 +646,7 @@
 					mainPopis: mainPopis,
 					prezdivka: $prezdivka,
 					cookie: $cookie,
+					selectedStitek: selectedMainStitek.id,
 				}),
 			}
 		)
@@ -689,7 +691,6 @@
 				urlObrazku: urlObrazku,
 				blocks: blocks,
 				autor: $prezdivka,
-				stitek: selectedMainStitek.id,
 				dalsiStitky: dalsiStitky,
 				anketa: anketa,
 				bodyAnkety: bodyAnkety,
@@ -697,6 +698,7 @@
 				mainPopis: mainPopis,
 				prezdivka: $prezdivka,
 				cookie: $cookie,
+				selectedStitek: selectedMainStitek.id,
 			}),
 		})
 			.then((response) => {
@@ -711,6 +713,7 @@
 				console.log(err);
 			});
 	}
+
 	function novyBod(i) {
 		if (i == 0) {
 			let bod = { nazev: "" };
@@ -764,6 +767,7 @@
 				mainPopis: mainPopis,
 				prezdivka: $prezdivka,
 				cookie: $cookie,
+				selectedStitek: selectedMainStitek.id,
 			}),
 		});
 	}
@@ -802,9 +806,9 @@
 					<select
 						bind:value={selectedMainStitek}
 						style={"border: 2px solid " +
-							selectedMainStitek.color +
+							selectedMainStitek?.color +
 							"; color: " +
-							selectedMainStitek.color}
+							selectedMainStitek?.color}
 						name="hlavniStitek"
 						id="hlavni-stitek"
 						onfocus="this.size=8;"
@@ -812,17 +816,17 @@
 						onchange="this.size=1; this.blur();"
 					>
 						{#each stitky as stitek}
-							<option value={stitek} style={"color: #333;"}>
+							<option
+								value={stitek}
+								style={"color: #333;"}
+								selected={true &&
+									selectedMainStitek.nazev == stitek.nazev}
+							>
 								{stitek.nazev}
 							</option>
 						{/each}
 					</select>
 				</div>
-				<input
-					type="text"
-					placeholder="Sekundární štítky"
-					bind:value={dalsiStitky}
-				/>
 			</div>
 			<h1
 				contenteditable="true"

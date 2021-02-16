@@ -122,7 +122,11 @@
 		} else {
 			autor = $prezdivka;
 			stitky = json.stitky;
-			selectedMainStitek = json.draft.selectedStitek;
+			if (json.draft) {
+				selectedMainStitek = json.draft.selectedStitek;
+			} else {
+				selectedMainStitek = stitky[0];
+			}
 
 			if (json.logo != "VelkaDomu") {
 				differentSite = json.logo;

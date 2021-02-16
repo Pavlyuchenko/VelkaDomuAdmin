@@ -48,7 +48,7 @@
 
 <div id="wrapper">
 	<section>
-		<h2>Vydané články</h2>
+		<h2>Kalendář</h2>
 		<div style="overflow-x:auto;">
 			<table>
 				<tr>

@@ -56,7 +56,6 @@
 	}
 </script>
 
-{chosen}
 <div id="main">
 	<div id="wrapper">
 		<Nadpis text="Sekundární články" />

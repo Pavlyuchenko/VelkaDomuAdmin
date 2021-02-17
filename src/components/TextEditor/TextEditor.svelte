@@ -41,10 +41,10 @@
 	onMount(() => {
 		getDraft();
 
-		let elements = document.getElementsByClassName("editor");
-
-		for (var i = 0; i < elements.length; i++) {
-			elements[i].addEventListener("paste", function (event) {
+		/* let elements = document.getElementsByClassName("editor"); */
+		document
+			.getElementById("podnadpis")
+			.addEventListener("paste", function (event) {
 				event.preventDefault();
 				document.execCommand(
 					"inserttext",
@@ -52,7 +52,6 @@
 					event.clipboardData.getData("text/plain")
 				);
 			});
-		}
 
 		document
 			.getElementById("main-image")
@@ -132,6 +131,22 @@
 				differentSite = json.logo;
 			}
 		}
+
+		setTimeout(() => {
+			for (var i = 1; i <= blocks.length; i++) {
+				console.log(i);
+				document
+					.getElementById("block" + i)
+					.addEventListener("paste", function (event) {
+						event.preventDefault();
+						document.execCommand(
+							"inserttext",
+							false,
+							event.clipboardData.getData("text/plain")
+						);
+					});
+			}
+		}, 10);
 	}
 
 	onDestroy(() => {

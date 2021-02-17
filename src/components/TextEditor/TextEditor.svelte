@@ -38,6 +38,8 @@
 	let nazevAnkety = "Název ankety...";
 	let bodyAnkety = [{ nazev: "První bod" }, { nazev: "Druhý bod" }];
 
+	let zdrojMainImage = "";
+
 	onMount(() => {
 		getDraft();
 
@@ -127,6 +129,8 @@
 			if (json.logo != "VelkaDomu") {
 				differentSite = json.logo;
 			}
+
+			zdrojMainImage = json.draft.zdrojObrazku;
 		} else {
 			autor = $prezdivka;
 			stitky = json.stitky;
@@ -633,6 +637,47 @@
 		pocetZnaku = znaky;
 	}
 
+	function getDate() {
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, "0");
+		var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+		var yyyy = today.getFullYear();
+
+		return dd + ". " + mm + ". " + yyyy;
+	}
+
+	function novyBod(i) {
+		if (i == 0) {
+			let bod = { nazev: "" };
+			bodyAnkety = [...bodyAnkety, bod];
+
+			i = bodyAnkety.length;
+		} else {
+			bodyAnkety.splice(i + 1, 0, { nazev: "" });
+			bodyAnkety = bodyAnkety;
+			i += 2;
+		}
+
+		setTimeout(() => {
+			let el = document.getElementById("bod" + i);
+
+			el.focus();
+		}, 1);
+	}
+
+	function deleteBod(i) {
+		if (bodyAnkety.length > 2) {
+			bodyAnkety.splice(i - 1, 1);
+			bodyAnkety = bodyAnkety;
+
+			setTimeout(() => {
+				let el = document.getElementById("bod" + (i - 1));
+
+				el.focus();
+			}, 1);
+		}
+	}
+
 	function sendData() {
 		fetch("https://fotbalpropal.pythonanywhere.com/save_draft", {
 			method: "POST",
@@ -653,6 +698,7 @@
 				prezdivka: $prezdivka,
 				cookie: $cookie,
 				selectedStitek: selectedMainStitek.id,
+				zdrojMainImage: zdrojMainImage,
 			}),
 		})
 			.then((response) => {
@@ -695,6 +741,7 @@
 					prezdivka: $prezdivka,
 					cookie: $cookie,
 					selectedStitek: selectedMainStitek.id,
+					zdrojMainImage: zdrojMainImage,
 				}),
 			}
 		)
@@ -715,47 +762,6 @@
 			.catch((err) => {
 				console.log(err);
 			});
-	}
-
-	function getDate() {
-		var today = new Date();
-		var dd = String(today.getDate()).padStart(2, "0");
-		var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-		var yyyy = today.getFullYear();
-
-		return dd + ". " + mm + ". " + yyyy;
-	}
-
-	function novyBod(i) {
-		if (i == 0) {
-			let bod = { nazev: "" };
-			bodyAnkety = [...bodyAnkety, bod];
-
-			i = bodyAnkety.length;
-		} else {
-			bodyAnkety.splice(i + 1, 0, { nazev: "" });
-			bodyAnkety = bodyAnkety;
-			i += 2;
-		}
-
-		setTimeout(() => {
-			let el = document.getElementById("bod" + i);
-
-			el.focus();
-		}, 1);
-	}
-
-	function deleteBod(i) {
-		if (bodyAnkety.length > 2) {
-			bodyAnkety.splice(i - 1, 1);
-			bodyAnkety = bodyAnkety;
-
-			setTimeout(() => {
-				let el = document.getElementById("bod" + (i - 1));
-
-				el.focus();
-			}, 1);
-		}
 	}
 
 	let charCount = 0;
@@ -780,6 +786,7 @@
 				prezdivka: $prezdivka,
 				cookie: $cookie,
 				selectedStitek: selectedMainStitek.id,
+				zdrojMainImage: zdrojMainImage,
 			}),
 		});
 	}
@@ -928,6 +935,12 @@
 				{urlObrazku}
 			</div>
 			{#if urlObrazku != "Zadej URL Obrázku..." && urlObrazku.startsWith("http")}
+				<div id="zdroj-main">
+					Zdroj:&nbsp;<input
+						type="text"
+						bind:value={zdrojMainImage}
+					/>
+				</div>
 				<img
 					src={urlObrazku}
 					alt="Titulní obrázek"
@@ -1381,6 +1394,9 @@
 </div>
 
 <style>
+	#zdroj-main {
+		margin-top: 5px;
+	}
 	#create-first-block {
 		height: 20px;
 	}

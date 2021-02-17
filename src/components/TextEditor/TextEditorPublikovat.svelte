@@ -34,6 +34,8 @@
 	$: selectedMainStitek = "";
 	$: dalsiStitky = "";
 
+	let zdrojMainImage = "";
+
 	let sendResponse = "";
 
 	let nazevAnkety = "Název ankety...";
@@ -119,6 +121,8 @@
 			autor = json.draft.autor;
 			stitky = json.stitky;
 			selectedMainStitek = json.draft.selectedStitek;
+
+			zdrojMainImage = json.draft.zdrojObrazku;
 
 			first = false;
 			firstPodnadpis = false;
@@ -608,6 +612,47 @@
 		pocetZnaku = znaky;
 	}
 
+	function getDate() {
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, "0");
+		var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+		var yyyy = today.getFullYear();
+
+		return dd + ". " + mm + ". " + yyyy;
+	}
+
+	function novyBod(i) {
+		if (i == 0) {
+			let bod = { nazev: "" };
+			bodyAnkety = [...bodyAnkety, bod];
+
+			i = bodyAnkety.length;
+		} else {
+			bodyAnkety.splice(i + 1, 0, { nazev: "" });
+			bodyAnkety = bodyAnkety;
+			i += 2;
+		}
+
+		setTimeout(() => {
+			let el = document.getElementById("bod" + i);
+
+			el.focus();
+		}, 1);
+	}
+
+	function deleteBod(i) {
+		if (bodyAnkety.length > 2) {
+			bodyAnkety.splice(i - 1, 1);
+			bodyAnkety = bodyAnkety;
+
+			setTimeout(() => {
+				let el = document.getElementById("bod" + (i - 1));
+
+				el.focus();
+			}, 1);
+		}
+	}
+
 	function sendData() {
 		fetch("https://fotbalpropal.pythonanywhere.com/save_draft", {
 			method: "POST",
@@ -628,6 +673,7 @@
 				prezdivka: $prezdivka,
 				cookie: $cookie,
 				selectedStitek: selectedMainStitek.id,
+				zdrojMainImage: zdrojMainImage,
 			}),
 		})
 			.then((response) => {
@@ -670,6 +716,7 @@
 					prezdivka: $prezdivka,
 					cookie: $cookie,
 					selectedStitek: selectedMainStitek.id,
+					zdrojMainImage: zdrojMainImage,
 				}),
 			}
 		)
@@ -690,15 +737,6 @@
 			.catch((err) => {
 				console.log(err);
 			});
-	}
-
-	function getDate() {
-		var today = new Date();
-		var dd = String(today.getDate()).padStart(2, "0");
-		var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-		var yyyy = today.getFullYear();
-
-		return dd + ". " + mm + ". " + yyyy;
 	}
 
 	function publikovat() {
@@ -722,6 +760,7 @@
 				prezdivka: $prezdivka,
 				cookie: $cookie,
 				selectedStitek: selectedMainStitek.id,
+				zdrojMainImage: zdrojMainImage,
 			}),
 		})
 			.then((response) => {
@@ -735,38 +774,6 @@
 			.catch((err) => {
 				console.log(err);
 			});
-	}
-
-	function novyBod(i) {
-		if (i == 0) {
-			let bod = { nazev: "" };
-			bodyAnkety = [...bodyAnkety, bod];
-
-			i = bodyAnkety.length;
-		} else {
-			bodyAnkety.splice(i + 1, 0, { nazev: "" });
-			bodyAnkety = bodyAnkety;
-			i += 2;
-		}
-
-		setTimeout(() => {
-			let el = document.getElementById("bod" + i);
-
-			el.focus();
-		}, 1);
-	}
-
-	function deleteBod(i) {
-		if (bodyAnkety.length > 2) {
-			bodyAnkety.splice(i - 1, 1);
-			bodyAnkety = bodyAnkety;
-
-			setTimeout(() => {
-				let el = document.getElementById("bod" + (i - 1));
-
-				el.focus();
-			}, 1);
-		}
 	}
 
 	let charCount = 0;
@@ -791,6 +798,7 @@
 				prezdivka: $prezdivka,
 				cookie: $cookie,
 				selectedStitek: selectedMainStitek.id,
+				zdrojMainImage: zdrojMainImage,
 			}),
 		});
 	}
@@ -881,17 +889,6 @@
 
 			<div class="clanek-info">
 				<span id="autor-span">{autor}</span>
-				<!-- <select name="autor" id="autor" bind:value={autorClanku}>
-					{#each autors as autor}
-						{#if autorClanku.id == autor.id}
-							<option value={autor} selected>
-								{autor.jmeno}
-							</option>
-						{:else}
-							<option value={autor}>{autor.jmeno}</option>
-						{/if}
-					{/each}
-				</select> -->
 				<span class="clanek-datum">{getDate()}</span>
 			</div>
 			<hr id="top-hr" />
@@ -947,6 +944,12 @@
 				{urlObrazku}
 			</div>
 			{#if urlObrazku != "Zadej URL Obrázku..." && urlObrazku.startsWith("http")}
+				<div id="zdroj-main">
+					Zdroj:&nbsp;<input
+						type="text"
+						bind:value={zdrojMainImage}
+					/>
+				</div>
 				<img
 					src={urlObrazku}
 					alt="Titulní obrázek"
@@ -1402,6 +1405,9 @@
 </div>
 
 <style>
+	#zdroj-main {
+		margin-top: 5px;
+	}
 	.zdroj {
 		margin-bottom: 10px;
 		margin-top: -10px;

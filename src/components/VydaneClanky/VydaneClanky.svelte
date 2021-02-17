@@ -55,7 +55,7 @@
 					<th>Titulek</th>
 					<th>Autor</th>
 					<th>Uloženo</th>
-					<th>Shlédnuto</th>
+					<th>Zhlédnuto</th>
 					<th>Přesměrování</th>
 				</tr>
 

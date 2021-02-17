@@ -41,7 +41,16 @@
 	onMount(() => {
 		getDraft();
 
-		/* let elements = document.getElementsByClassName("editor"); */
+		document
+			.getElementById("nadpish1")
+			.addEventListener("paste", function (event) {
+				event.preventDefault();
+				document.execCommand(
+					"inserttext",
+					false,
+					event.clipboardData.getData("text/plain")
+				);
+			});
 		document
 			.getElementById("podnadpis")
 			.addEventListener("paste", function (event) {
@@ -846,6 +855,7 @@
 				}}
 				bind:innerHTML={titulek}
 				class={first ? "first editor" : "second editor"}
+				id="nadpish1"
 			>
 				{titulek}
 			</h1>
@@ -924,6 +934,12 @@
 					id="titulni-obrazek"
 				/>
 			{/if}
+			<div
+				id="create-first-block"
+				on:click={() => {
+					createBlock(0);
+				}}
+			/>
 
 			{#each blocks as block}
 				{#if block.type == "obrazek"}
@@ -937,7 +953,10 @@
 							focusedEl = block.id;
 						}}
 						on:focus|once={() => {
-							if (block.url == "Zadej URL obrázku...") {
+							if (
+								block.url == "Zadej URL obrázku..." ||
+								block.url == "undefined"
+							) {
 								block.url = "";
 							}
 						}}
@@ -946,6 +965,12 @@
 						class="image"
 					>
 						{block.url}
+					</div>
+					<div class="zdroj">
+						Zdroj:&nbsp;<input
+							type="text"
+							bind:value={block.zdroj}
+						/>
 					</div>
 					{#if block.url != "Zadej URL Obrázku..."}
 						<img
@@ -965,13 +990,16 @@
 							focusedEl = block.id;
 						}}
 						on:focus|once={() => {
-							if (block.tweet == "Zadej Tweet...") {
+							if (
+								block.tweet == "Zadej Tweet..." ||
+								block.tweet == "undefined"
+							) {
 								block.tweet = "";
 							}
 						}}
 						on:keydown={(e) => keyDown(e, block.id)}
 						id={"block" + block.id}
-						class="image"
+						class="image twitter-blue"
 					>
 						{block.tweet}
 					</div>
@@ -986,13 +1014,16 @@
 							focusedEl = block.id;
 						}}
 						on:focus|once={() => {
-							if (block.url == "Zadej ID videa...") {
+							if (
+								block.url == "Zadej ID videa..." ||
+								block.url == "undefined"
+							) {
 								block.url = "";
 							}
 						}}
 						on:keydown={(e) => keyDown(e, block.id)}
 						id={"block" + block.id}
-						class="image"
+						class="image youtube-red"
 					>
 						{block.url}
 					</div>
@@ -1164,13 +1195,31 @@
 								>
 									Callout
 								</div>
-								{#if block.content == ""}
+								{#if block.content == "" || block.content == "Tělo článku..."}
 									<div
 										on:click={() => {
 											turnInto("obrazek", block.id);
 										}}
 									>
 										Obrázek
+									</div>
+								{/if}
+								{#if block.content == "" || block.content == "Tělo článku..."}
+									<div
+										on:click={() => {
+											turnInto("twitter", block.id);
+										}}
+									>
+										Tweet
+									</div>
+								{/if}
+								{#if block.content == "" || block.content == "Tělo článku..."}
+									<div
+										on:click={() => {
+											turnInto("youtube", block.id);
+										}}
+									>
+										Video
 									</div>
 								{/if}
 								<div
@@ -1219,16 +1268,6 @@
 				<input type="checkbox" bind:checked={osnova} />
 				<span class="checkmark" />
             </label> -->
-			{#if differentSite == false}
-				<p id="textarea-p">
-					Napiš krátký chytlavý popis článku, kdyby se stal hlavním
-					článkem:
-				</p>
-			{:else}
-				<p id="textarea-p">Zadej URL původního článku:</p>
-			{/if}
-			<textarea bind:value={mainPopis} />
-
 			{#if anketa}
 				<div>
 					<h4
@@ -1282,6 +1321,17 @@
 					</div>
 				</div>
 			{/if}
+
+			{#if differentSite == false}
+				<p id="textarea-p">
+					Napiš krátký chytlavý popis článku, kdyby se stal hlavním
+					článkem:
+				</p>
+			{:else}
+				<p id="textarea-p">Zadej URL původního článku:</p>
+			{/if}
+			<textarea bind:value={mainPopis} />
+
 			<br />
 
 			<div id="flex-publikovat">
@@ -1331,6 +1381,13 @@
 </div>
 
 <style>
+	#create-first-block {
+		height: 20px;
+	}
+	.zdroj {
+		margin-bottom: 10px;
+		margin-top: -10px;
+	}
 	#autor-span {
 		color: #ffa800;
 		font-size: 16px;
@@ -1431,6 +1488,9 @@
 		padding-right: 20px;
 		color: #8d8d8d;
 		font-weight: 600;
+	}
+	#main-image {
+		margin-bottom: 0;
 	}
 
 	img {
@@ -1824,5 +1884,19 @@
 		font-size: 18px;
 
 		font-weight: 400;
+	}
+	.twitter-blue {
+		background-color: #1da1f2;
+		border-color: #1da1f2;
+		color: #ffffff;
+	}
+	.youtube-red {
+		background-color: #ff0000;
+		border-color: #ff0000;
+		color: #ffffff;
+	}
+	#titulni-obrazek {
+		margin-top: 10px;
+		margin-bottom: 0;
 	}
 </style>

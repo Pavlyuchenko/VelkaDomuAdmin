@@ -155,6 +155,7 @@
 				differentSite = json.logo;
 			}
 		}
+		autoSave();
 
 		setTimeout(() => {
 			for (var i = 1; i <= blocks.length; i++) {

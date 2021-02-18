@@ -1450,6 +1450,10 @@
 </div>
 
 <style>
+	[contenteditable] {
+		-webkit-user-select: text;
+		user-select: text;
+	}
 	#zdroj-main {
 		margin-top: 5px;
 	}

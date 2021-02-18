@@ -224,6 +224,11 @@
 		<span id="header__logo-text">VelkáDomůAdmin.cz</span>
 	</Link>
 	<nav id="header__navigation">
+		{#if $isAuthenticated}
+			<div>
+				<Link to="/kontrola"><span>Kontrola</span></Link>
+			</div>
+		{/if}
 		<div>
 			<Link to="/statistiky"><span>Statistiky</span></Link>
 		</div>
@@ -859,6 +864,52 @@
 	/>
 {/if}
 
+<!-- {#if showKod}
+    <div id="login-phone" transition:fly={{ x: 500, duration: 500 }}>
+        <h2>Ověření emailu</h2>
+        <span
+            id="zavrit-prihlaseni-phone"
+            on:click={() => {
+                showKod = false;
+            }}>X</span>
+
+        <p id="code-info">
+            Poslali jsme ověřovací kód na tvou emailovou adresu, abychom se
+            ujistili, že patří opravdu tobě.
+        </p>
+
+        <div id="input-code">
+            <input
+                type="text"
+                id="code"
+                bind:value={fiveDigit}
+                placeholder="- - - - -"
+                maxlength="5" />
+            <p id="acknowledgement">
+                Může trvat až pět minut, než přijde ověřovací email. Pokud email
+                přesto nepřijde, zkontroluj také spam.
+            </p>
+        </div>
+
+        <svg
+            id="login-logo-phone"
+            xmlns="http://www.w3.org/2000/svg"
+            width="82"
+            height="82"
+            viewBox="0 0 82 82"
+            fill="none"
+            on:click={() => {
+                confirmEmail();
+            }}>
+            <path
+                d="M32.1832 6.40577C37.4405 2.58611 44.5595 2.5861 49.8168 6.40576L71.1765 21.9245C76.4338 25.7442 78.6337 32.5147 76.6256 38.695L68.4669 63.8049C66.4588 69.9853 60.6995 74.1697 54.2011 74.1697H27.7989C21.3006 74.1697 15.5412 69.9853 13.5331 63.8049L5.3744 38.6951C3.36628 32.5147 5.56615 25.7442 10.8235 21.9245L32.1832 6.40577Z"
+                fill="#FF8A00" />
+            <path
+                d="M58.4142 42.4142C59.1953 41.6332 59.1953 40.3668 58.4142 39.5858L45.6863 26.8579C44.9052 26.0768 43.6389 26.0768 42.8579 26.8579C42.0768 27.6389 42.0768 28.9052 42.8579 29.6863L54.1716 41L42.8579 52.3137C42.0768 53.0948 42.0768 54.3611 42.8579 55.1421C43.6389 55.9232 44.9052 55.9232 45.6863 55.1421L58.4142 42.4142ZM24 43H57V39H24V43Z"
+                fill="white" />
+        </svg>
+    </div>
+{/if} -->
 <style>
 	#content-adder {
 		position: fixed;

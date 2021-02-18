@@ -851,8 +851,8 @@
 				<p>Tučně - Ctrl + b (nebo @text/@)</p>
 				<p>Podtržení - Ctrl + u</p>
 				<p>/img - Obrázek</p>
-				<p>/tweet - Tweet</p>
-				<p>/ytb - Video (youtu.be/<b><u>aKKQdn26QJc</u></b>)</p>
+				<p>/tweet - Tweet (embed)</p>
+				<p>/ytb - Video (embed)</p>
 			</div>
 		</aside>
 		<section>
@@ -1073,16 +1073,6 @@
 					>
 						{block.url}
 					</div>
-					{#if block.url != "Zadej ID videa..." && block.url != ""}
-						<iframe
-							title="video"
-							src={"https://www.youtube-nocookie.com/embed/" +
-								block.url}
-							frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen
-						/>
-					{/if}
 				{:else}
 					<div
 						class="options-container"
@@ -1138,7 +1128,11 @@
 								} else if (e.metaKey && e.key == "b") {
 									document.execCommand("Bold", false, null);
 								} else if (e.metaKey && e.key == "u") {
-									document.execCommand("Underline", false, null);
+									document.execCommand(
+										"Underline",
+										false,
+										null
+									);
 								} else if (e.metaKey && e.key == "i") {
 									document.execCommand("Italic", false, null);
 								}

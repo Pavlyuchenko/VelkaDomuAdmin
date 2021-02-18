@@ -1137,6 +1137,10 @@
 									// e.preventDefault();
 								} else if (e.metaKey && e.key == "b") {
 									document.execCommand("Bold", false, null);
+								} else if (e.metaKey && e.key == "u") {
+									document.execCommand("Underline", false, null);
+								} else if (e.metaKey && e.key == "i") {
+									document.execCommand("Italic", false, null);
 								}
 								console.log(e.metaKey);
 								console.log(e.key);

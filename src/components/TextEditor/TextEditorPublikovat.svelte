@@ -75,6 +75,26 @@
 					event.clipboardData.getData("text/plain")
 				);
 			});
+		document
+			.getElementById("nazev-ankety")
+			.addEventListener("paste", function (event) {
+				event.preventDefault();
+				document.execCommand(
+					"inserttext",
+					false,
+					event.clipboardData.getData("text/plain")
+				);
+			});
+		document
+			.getElementById("main-popis-textarea")
+			.addEventListener("paste", function (event) {
+				event.preventDefault();
+				document.execCommand(
+					"inserttext",
+					false,
+					event.clipboardData.getData("text/plain")
+				);
+			});
 		document.addEventListener(
 			"keydown",
 			function (e) {
@@ -1269,7 +1289,31 @@
 			<div id="osnova-flex">
 				<label class="container">
 					Vytvořit anketu
-					<input type="checkbox" bind:checked={anketa} />
+					<input
+						type="checkbox"
+						bind:checked={anketa}
+						on:click={() => {
+							setTimeout(() => {
+								if (anketa) {
+									document
+										.getElementById("nazev-ankety")
+										.addEventListener(
+											"paste",
+											function (event) {
+												event.preventDefault();
+												document.execCommand(
+													"inserttext",
+													false,
+													event.clipboardData.getData(
+														"text/plain"
+													)
+												);
+											}
+										);
+								}
+							}, 1);
+						}}
+					/>
 					<span class="checkmark" />
 				</label>
 				{#if pocetSlov == 1}
@@ -1290,15 +1334,6 @@
 				<input type="checkbox" bind:checked={osnova} />
 				<span class="checkmark" />
             </label> -->
-			{#if differentSite == false}
-				<p id="textarea-p">
-					Napiš krátký chytlavý popis článku, kdyby se stal hlavním
-					článkem:
-				</p>
-			{:else}
-				<p id="textarea-p">Zadej URL původního článku:</p>
-			{/if}
-			<textarea bind:value={mainPopis} />
 			{#if anketa}
 				<div>
 					<h4
@@ -1352,6 +1387,16 @@
 					</div>
 				</div>
 			{/if}
+			{#if differentSite == false}
+				<p id="textarea-p">
+					Napiš krátký chytlavý popis článku, kdyby se stal hlavním
+					článkem:
+				</p>
+			{:else}
+				<p id="textarea-p">Zadej URL původního článku:</p>
+			{/if}
+			<textarea bind:value={mainPopis} id="main-popis-textarea" />
+
 			<br />
 
 			<div id="flex-publikovat">

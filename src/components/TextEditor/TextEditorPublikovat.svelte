@@ -1131,6 +1131,8 @@
 									e.ctrlKey
 								) {
 									// e.preventDefault();
+								} else if (e.metaKey && e.key == "b") {
+									document.execCommand("Bold", false, null);
 								}
 								if (charCount < CHARBEFORESAVE) {
 									charCount++;
@@ -1450,7 +1452,7 @@
 </div>
 
 <style>
-	[contenteditable] {
+	.block {
 		-webkit-user-select: text;
 		user-select: text;
 	}

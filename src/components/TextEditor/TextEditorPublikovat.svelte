@@ -43,6 +43,7 @@
 
 	onMount(() => {
 		getDraft();
+
 		document
 			.getElementById("nadpish1")
 			.addEventListener("paste", function (event) {
@@ -147,6 +148,18 @@
 				console.log(i);
 				document
 					.getElementById("block" + i)
+					.addEventListener("paste", function (event) {
+						event.preventDefault();
+						document.execCommand(
+							"inserttext",
+							false,
+							event.clipboardData.getData("text/plain")
+						);
+					});
+			}
+			if (anketa) {
+				document
+					.getElementById("nazev-ankety")
 					.addEventListener("paste", function (event) {
 						event.preventDefault();
 						document.execCommand(

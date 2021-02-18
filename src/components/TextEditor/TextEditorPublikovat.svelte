@@ -1134,6 +1134,8 @@
 								} else if (e.metaKey && e.key == "b") {
 									document.execCommand("Bold", false, null);
 								}
+								console.log(e.metaKey);
+								console.log(e.key);
 								if (charCount < CHARBEFORESAVE) {
 									charCount++;
 								} else {

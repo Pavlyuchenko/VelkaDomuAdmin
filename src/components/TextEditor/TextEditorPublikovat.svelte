@@ -75,16 +75,7 @@
 					event.clipboardData.getData("text/plain")
 				);
 			});
-		document
-			.getElementById("nazev-ankety")
-			.addEventListener("paste", function (event) {
-				event.preventDefault();
-				document.execCommand(
-					"inserttext",
-					false,
-					event.clipboardData.getData("text/plain")
-				);
-			});
+
 		document
 			.getElementById("main-popis-textarea")
 			.addEventListener("paste", function (event) {

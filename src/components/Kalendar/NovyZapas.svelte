@@ -28,7 +28,13 @@
 		hoste = kluby[2];
 	}
 
-	let date;
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, "0");
+	var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+	var yyyy = today.getFullYear();
+
+	let date = mm + yyyy + "-" + mm + "-" + dd;
+
 	let time = "18:00";
 	let domaciSkore = "0";
 	let hosteSkore = "0";

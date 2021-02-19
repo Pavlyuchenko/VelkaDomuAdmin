@@ -13,7 +13,7 @@
 
 	async function getRychlovka() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/rychlovka/" + id,
+			"https://velkadomu.pythonanywhere.com/rychlovka/" + id,
 			{
 				method: "POST",
 				headers: {
@@ -34,21 +34,18 @@
 	let text = "";
 
 	function updateRychlovka() {
-		fetch(
-			"https://fotbalpropal.pythonanywhere.com/update_rychlovka/" + id,
-			{
-				method: "POST",
-				headers: {
-					"content-type": "application/json",
-				},
-				body: JSON.stringify({
-					titulek: nadpis,
-					body: text,
-					prezdivka: $prezdivka,
-					cookie: $cookie,
-				}),
-			}
-		)
+		fetch("https://velkadomu.pythonanywhere.com/update_rychlovka/" + id, {
+			method: "POST",
+			headers: {
+				"content-type": "application/json",
+			},
+			body: JSON.stringify({
+				titulek: nadpis,
+				body: text,
+				prezdivka: $prezdivka,
+				cookie: $cookie,
+			}),
+		})
 			.then((response) => {
 				if (response.status == 200) {
 					navigate("/rychlovky");

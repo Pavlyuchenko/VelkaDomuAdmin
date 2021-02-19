@@ -103,7 +103,7 @@
 	let differentSite = false;
 	async function getDraft() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/draft/" + id,
+			"https://velkadomu.pythonanywhere.com/draft/" + id,
 			{
 				method: "POST",
 				headers: {
@@ -691,7 +691,7 @@
 	}
 
 	function sendData() {
-		fetch("https://fotbalpropal.pythonanywhere.com/save_draft", {
+		fetch("https://velkadomu.pythonanywhere.com/save_draft", {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",
@@ -733,7 +733,7 @@
 
 	function sendDataAndKontrola() {
 		fetch(
-			"https://fotbalpropal.pythonanywhere.com/save_draft_and_potvrdit",
+			"https://velkadomu.pythonanywhere.com/save_draft_and_potvrdit",
 			{
 				method: "POST",
 				headers: {
@@ -779,7 +779,7 @@
 	let charCount = 0;
 	let CHARBEFORESAVE = 25;
 	function autoSave() {
-		fetch("https://fotbalpropal.pythonanywhere.com/save_draft", {
+		fetch("https://velkadomu.pythonanywhere.com/save_draft", {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",

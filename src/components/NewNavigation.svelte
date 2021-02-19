@@ -49,7 +49,7 @@
 			prezdivkaStorage != null
 		) {
 			const res = await fetch(
-				"https://fotbalpropal.pythonanywhere.com/check_cookie",
+				"https://velkadomu.pythonanywhere.com/check_cookie",
 				{
 					method: "POST",
 					headers: {
@@ -77,19 +77,16 @@
 	}
 
 	async function login() {
-		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/login",
-			{
-				method: "POST",
-				headers: {
-					"content-type": "application/json",
-				},
-				body: JSON.stringify({
-					email: email,
-					heslo: password,
-				}),
-			}
-		);
+		const res = await fetch("https://velkadomu.pythonanywhere.com/login", {
+			method: "POST",
+			headers: {
+				"content-type": "application/json",
+			},
+			body: JSON.stringify({
+				email: email,
+				heslo: password,
+			}),
+		});
 
 		if (res.status == 200) {
 			const json = await res.json();
@@ -116,7 +113,7 @@
 
 	async function confirmEmail() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/confirm_email",
+			"https://velkadomu.pythonanywhere.com/confirm_email",
 			{
 				method: "POST",
 				headers: {
@@ -153,7 +150,7 @@
 
 	async function registerMobile() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/register_mobile",
+			"https://velkadomu.pythonanywhere.com/register_mobile",
 			{
 				method: "POST",
 				headers: {

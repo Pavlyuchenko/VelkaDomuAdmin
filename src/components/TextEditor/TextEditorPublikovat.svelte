@@ -104,7 +104,7 @@
 	let differentSite = false;
 	async function getDraft() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/draft/" + id,
+			"https://velkadomu.pythonanywhere.com/draft/" + id,
 			{
 				method: "POST",
 				headers: {
@@ -678,7 +678,7 @@
 	}
 
 	function sendData() {
-		fetch("https://fotbalpropal.pythonanywhere.com/save_draft", {
+		fetch("https://velkadomu.pythonanywhere.com/save_draft", {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",
@@ -719,31 +719,28 @@
 	}
 
 	function vratitZpet() {
-		fetch(
-			"https://fotbalpropal.pythonanywhere.com/save_draft_and_potvrdit",
-			{
-				method: "POST",
-				headers: {
-					"content-type": "application/json",
-				},
-				body: JSON.stringify({
-					id: id,
-					titulek: titulek,
-					podnadpis: podnadpis,
-					urlObrazku: urlObrazku,
-					blocks: blocks,
-					autor: $prezdivka,
-					anketa: anketa,
-					bodyAnkety: bodyAnkety,
-					nazevAnkety: nazevAnkety,
-					mainPopis: mainPopis,
-					prezdivka: $prezdivka,
-					cookie: $cookie,
-					selectedStitek: selectedMainStitek.id,
-					zdrojMainImage: zdrojMainImage,
-				}),
-			}
-		)
+		fetch("https://velkadomu.pythonanywhere.com/save_draft_and_potvrdit", {
+			method: "POST",
+			headers: {
+				"content-type": "application/json",
+			},
+			body: JSON.stringify({
+				id: id,
+				titulek: titulek,
+				podnadpis: podnadpis,
+				urlObrazku: urlObrazku,
+				blocks: blocks,
+				autor: $prezdivka,
+				anketa: anketa,
+				bodyAnkety: bodyAnkety,
+				nazevAnkety: nazevAnkety,
+				mainPopis: mainPopis,
+				prezdivka: $prezdivka,
+				cookie: $cookie,
+				selectedStitek: selectedMainStitek.id,
+				zdrojMainImage: zdrojMainImage,
+			}),
+		})
 			.then((response) => {
 				if (response.status == 200) {
 					sendResponse = "Tvůj draft byl úspěšně uložen.";
@@ -764,7 +761,7 @@
 	}
 
 	function publikovat() {
-		fetch("https://fotbalpropal.pythonanywhere.com/create_clanek", {
+		fetch("https://velkadomu.pythonanywhere.com/create_clanek", {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",
@@ -803,7 +800,7 @@
 	let charCount = 0;
 	let CHARBEFORESAVE = 25;
 	function autoSave() {
-		fetch("https://fotbalpropal.pythonanywhere.com/save_draft", {
+		fetch("https://velkadomu.pythonanywhere.com/save_draft", {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",

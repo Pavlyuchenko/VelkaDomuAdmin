@@ -11,7 +11,7 @@
 
 	async function getZapasy() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/kalendar",
+			"https://velkadomu.pythonanywhere.com/kalendar",
 			{
 				method: "POST",
 				headers: {
@@ -30,7 +30,7 @@
 
 	async function deleteZapas(id) {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/delete_zapas/" + id,
+			"https://velkadomu.pythonanywhere.com/delete_zapas/" + id,
 			{
 				method: "POST",
 				headers: {

@@ -8,7 +8,7 @@
 	let text = "";
 
 	function addRychlovka() {
-		fetch("https://fotbalpropal.pythonanywhere.com/nova_rychlovka", {
+		fetch("https://velkadomu.pythonanywhere.com/nova_rychlovka", {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",

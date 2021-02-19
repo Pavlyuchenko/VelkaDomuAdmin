@@ -14,7 +14,7 @@
 	async function getRychlovky() {
 		try {
 			const res = await fetch(
-				"https://fotbalpropal.pythonanywhere.com/rychlovky",
+				"https://velkadomu.pythonanywhere.com/rychlovky",
 				{
 					method: "POST",
 					headers: {
@@ -35,7 +35,7 @@
 
 	async function deleteRychlovka(id) {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/delete_rychlovka/" + id,
+			"https://velkadomu.pythonanywhere.com/delete_rychlovka/" + id,
 			{
 				method: "POST",
 				headers: {

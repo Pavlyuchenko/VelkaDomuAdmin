@@ -350,7 +350,7 @@
 						publicKey: "public_gn7dgk7SJbBFinh/vtiiagVDgbM=",
 						urlEndpoint: "https://ik.imagekit.io/velkadomu",
 						authenticationEndpoint:
-							"https://fotbalpropal.pythonanywhere.com/auth",
+							"https://velkadomu.pythonanywhere.com/auth",
 					});
 					imagekit.upload(
 						{
@@ -431,7 +431,7 @@
 				publicKey: "public_gn7dgk7SJbBFinh/vtiiagVDgbM=",
 				urlEndpoint: "https://ik.imagekit.io/velkadomu",
 				authenticationEndpoint:
-					"https://fotbalpropal.pythonanywhere.com/auth",
+					"https://velkadomu.pythonanywhere.com/auth",
 			});
 			imagekit.upload(
 				{

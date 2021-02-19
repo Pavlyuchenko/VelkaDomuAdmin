@@ -14,7 +14,7 @@
 
 	async function getDrafts() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/drafts_kontrola",
+			"https://velkadomu.pythonanywhere.com/drafts_kontrola",
 			{
 				method: "POST",
 				headers: {
@@ -43,7 +43,7 @@
 
 	async function deleteDraft(id) {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/delete_draft/" + id,
+			"https://velkadomu.pythonanywhere.com/delete_draft/" + id,
 			{
 				method: "POST",
 				headers: {

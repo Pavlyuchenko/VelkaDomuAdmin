@@ -15,7 +15,7 @@
 
 	async function getInfo() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/get_zapasy_info"
+			"https://velkadomu.pythonanywhere.com/get_zapasy_info"
 		);
 		const json = await res.json();
 		stitky = json.stitky;
@@ -58,7 +58,7 @@
 	}
 
 	function addZapas() {
-		fetch("https://fotbalpropal.pythonanywhere.com/add_zapas", {
+		fetch("https://velkadomu.pythonanywhere.com/add_zapas", {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",

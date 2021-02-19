@@ -11,19 +11,16 @@
 	let next_id = 0;
 
 	async function getDrafts() {
-		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/drafts",
-			{
-				method: "POST",
-				headers: {
-					"content-type": "application/json",
-				},
-				body: JSON.stringify({
-					cookie: $cookie,
-					prezdivka: $prezdivka,
-				}),
-			}
-		);
+		const res = await fetch("https://velkadomu.pythonanywhere.com/drafts", {
+			method: "POST",
+			headers: {
+				"content-type": "application/json",
+			},
+			body: JSON.stringify({
+				cookie: $cookie,
+				prezdivka: $prezdivka,
+			}),
+		});
 		let data = await res.json();
 		drafts = data.drafts;
 
@@ -38,7 +35,7 @@
 
 	async function deleteDraft(id) {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/delete_draft/" + id,
+			"https://velkadomu.pythonanywhere.com/delete_draft/" + id,
 			{
 				method: "POST",
 				headers: {

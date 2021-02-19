@@ -10,7 +10,7 @@
 
 	async function getClanky() {
 		const res = await fetch(
-			"https://fotbalpropal.pythonanywhere.com/sekundarni-clanky",
+			"https://velkadomu.pythonanywhere.com/sekundarni-clanky",
 			{
 				method: "POST",
 				headers: {
@@ -36,7 +36,7 @@
 	let chosen;
 
 	function setHlavniClanek() {
-		fetch("https://fotbalpropal.pythonanywhere.com/set-sekundarni-clanek", {
+		fetch("https://velkadomu.pythonanywhere.com/set-sekundarni-clanek", {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",

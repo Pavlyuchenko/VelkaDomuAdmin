@@ -1,5 +1,5 @@
 <script>
-	import { Link } from "svelte-routing";
+	import { Link, navigate } from "svelte-routing";
 	import { onMount } from "svelte";
 	import { cookie, prezdivka } from "../../store";
 
@@ -48,6 +48,24 @@
 			}
 		);
 		getDrafts();
+	}
+
+	async function redirect() {
+		const res = await fetch(
+			"https://velkadomu.pythonanywhere.com/get_next_draft_id",
+			{
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					cookie: $cookie,
+					prezdivka: $prezdivka,
+				}),
+			}
+		);
+		let data = await res.json();
+		navigate("/drafts/" + data.next);
 	}
 </script>
 
@@ -123,9 +141,7 @@
 				{/if}
 			</table>
 		</div>
-		{#if drafts}
-			<Link to={"/drafts/" + next_id}><button>Nový draft</button></Link>
-		{/if}
+		<button on:click={redirect}>Nový draft</button>
 	</section>
 </div>
 

@@ -27,7 +27,7 @@
 		id = json.id;
 	}
 
-	let clanky = [""];
+	let clanky;
 	let id = 0;
 
 	function setHlavniClanek() {
@@ -55,23 +55,27 @@
 	<div id="wrapper">
 		<Nadpis text="Titulní článek" />
 		<section>
-			{#each clanky as clanek}
-				<div
-					id={clanek.id == id && "chosen"}
-					class="border"
-					on:click={() => (id = clanek.id)}
-				>
-					<div id="green">
-						<img
-							src={"https://ik.imagekit.io/velkadomu/tr:h-260,w-420" +
-								clanek.obrazek}
-							alt=""
-						/>
-						<div class="checkmark" />
+			{#if clanky}
+				{#each clanky as clanek}
+					<div
+						id={clanek.id == id && "chosen"}
+						class="border"
+						on:click={() => (id = clanek.id)}
+					>
+						<div id="green">
+							<img
+								src={"https://ik.imagekit.io/velkadomu/tr:h-260,w-420" +
+									clanek.obrazek}
+								alt=""
+							/>
+							<div class="checkmark" />
+						</div>
+						<h2>{clanek.titulek}</h2>
 					</div>
-					<h2>{clanek.titulek}</h2>
-				</div>
-			{/each}
+				{/each}
+			{:else}
+				Abys mohl vybírat titulní článek, musíš mít status superadmina.
+			{/if}
 		</section>
 	</div>
 	<div id="button" on:click={setHlavniClanek}>Uložit</div>

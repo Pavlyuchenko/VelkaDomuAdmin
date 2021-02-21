@@ -2,7 +2,6 @@
 	import { Link } from "svelte-routing";
 	import { onMount } from "svelte";
 
-	import Navigation from "../NewNavigation.svelte";
 	import { cookie, prezdivka } from "../../store";
 
 	onMount(() => {
@@ -127,6 +126,8 @@
 						</td>
 					</tr>
 				{/each}
+			{:else}
+				Abys mohl kontrolovat články, musíš mít status superadmina.
 			{/if}
 		</table>
 	</section>

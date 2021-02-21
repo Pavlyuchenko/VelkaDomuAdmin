@@ -47,5 +47,20 @@
 		<Route path="/rychlovky">
 			<Rychlovky {login} />
 		</Route>
+	{:else}
+		Abys mohl tvořit obsah pro velkadomu.cz, musíš se nejprve
+		<span on:click={login.changeLogin}>přihlásit </span>.
 	{/if}
 </Router>
+
+<style>
+	span {
+		text-decoration: underline;
+		cursor: pointer;
+		transition: 0.15s;
+		margin-top: 40%;
+	}
+	span:hover {
+		color: #ff8a00;
+	}
+</style>

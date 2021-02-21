@@ -24,14 +24,12 @@
 		);
 		const json = await res.json();
 		clanky = json.clanky;
-		/* for (let i = 0; i <= clanky.length; i++) {
-			chosen = chosen + 1;
-		} */
+
 		ids = json.ids;
 		chosen = ids.length;
 	}
 
-	let clanky = [""];
+	let clanky;
 	let ids = [0];
 	let chosen;
 
@@ -60,33 +58,38 @@
 	<div id="wrapper">
 		<Nadpis text="Sekundární články" />
 		<section>
-			{#each clanky as clanek}
-				<div
-					id={ids.includes(clanek.id) && "chosen"}
-					class="border"
-					on:click={() => {
-						if (ids.includes(clanek.id)) {
-							ids.splice(ids.indexOf(clanek.id), 1);
-							ids = ids;
-							chosen--;
-						} else if (chosen < 3) {
-							ids.push(clanek.id);
-							ids = ids;
-							chosen++;
-						}
-					}}
-				>
-					<div id="green">
-						<img
-							src={"https://ik.imagekit.io/velkadomu/tr:h-260,w-420" +
-								clanek.obrazek}
-							alt=""
-						/>
-						<div class="checkmark" />
+			{#if clanky}
+				{#each clanky as clanek}
+					<div
+						id={ids.includes(clanek.id) && "chosen"}
+						class="border"
+						on:click={() => {
+							if (ids.includes(clanek.id)) {
+								ids.splice(ids.indexOf(clanek.id), 1);
+								ids = ids;
+								chosen--;
+							} else if (chosen < 3) {
+								ids.push(clanek.id);
+								ids = ids;
+								chosen++;
+							}
+						}}
+					>
+						<div id="green">
+							<img
+								src={"https://ik.imagekit.io/velkadomu/tr:h-260,w-420" +
+									clanek.obrazek}
+								alt=""
+							/>
+							<div class="checkmark" />
+						</div>
+						<h2>{clanek.titulek}</h2>
 					</div>
-					<h2>{clanek.titulek}</h2>
-				</div>
-			{/each}
+				{/each}
+			{:else}
+				Abys mohl vybírat Sekundární články, musíš mít status
+				superadmina.
+			{/if}
 		</section>
 	</div>
 	<div id="button" on:click={chosen == 3 && setHlavniClanek}>Uložit</div>

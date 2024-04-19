@@ -26,7 +26,7 @@
 
 	onMount(() => {
 		if (!login) {
-			alert("This admin page is no longer in use.\nTo test it out, login using email test@user.cz and password testuser.\n Feel free to play around, I got the database archived.");
+			alert("This admin page is no longer in use.\nTo test it out, login using the following info:\nemail: test@user.cz\npassword testuser.\nFeel free to play around, I got the database archived.");
 		}
 	});
 </script>

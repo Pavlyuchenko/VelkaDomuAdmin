@@ -1,10 +1,6 @@
 <script>
 	import { navigate } from "svelte-routing";
-	import { onMount } from "svelte";
 
-	onMount(() => {
-		alert("This admin page is no longer in use.\nTo test it out, login using email test@user.cz and password testuser.\n Feel free to play around, I got the database archived.");
-	});
 </script>
 
 <section>

@@ -19,8 +19,16 @@
 	import VydaneClanky from "./components/VydaneClanky/VydaneClanky.svelte";
 	import Statistiky from "./components/Statistiky.svelte";
 	import Kalendar from "./components/Kalendar/Kalendar.svelte";
+	import { onMount } from "svelte";
 
+	
 	let login = false;
+
+	onMount(() => {
+		if (!login) {
+			alert("This admin page is no longer in use.\nTo test it out, login using email test@user.cz and password testuser.\n Feel free to play around, I got the database archived.");
+		}
+	});
 </script>
 
 <Router>
